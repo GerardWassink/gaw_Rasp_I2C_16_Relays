@@ -78,3 +78,11 @@ Verder nodig:
 
 * `MCP23017-E/SO` I2C 16 bit I/O expander (€2,45)
 
+## Schema
+Mijn schema wordt dan als volgt:
+
+![Figuur 6. mijn schema](./Rasp_16_Relays_I2C.png)
+
+Het gedeelte dat is verbonden met pin 21 (GPA0) van het IC, moet 16 maal worden herhaald.
+
+
