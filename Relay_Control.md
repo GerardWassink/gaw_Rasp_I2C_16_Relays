@@ -67,12 +67,12 @@ Maakt eigenlijk niet zoveel uit, de standaard diode `1N4007` volstaat.
 ## Conclusie
 Ik ga na advies van Okaphone kiezen voor:
 
-* het `V23079-A1001-B301` relais, 5V spoelspanning, met een spoel impedantie van 187 Ohm:
-* de `BC337-16` (Old school, €0,25) 
-* de `1N4007` als 'blus-diode' (€0,15)
+* het `V23079-A1001-B301` relais, 5V spoelspanning (€3,30)
+* de `BC337-16` (Old school, €0,20) 
+* de `1N4007` als 'blus-diode' (€0,10)
 * een 10K basisweerstand (€0,01)
 * een 1K weerstand voor stroombegrenzing voor de indicatie LED (0,01)
-* een groene indicatie LED `L934LGD` - stroom tot 5mA (€0,25)
+* een groene indicatie LED `L934LGD` - stroom tot 5mA (€0,20)
 
 Verder nodig:
 
