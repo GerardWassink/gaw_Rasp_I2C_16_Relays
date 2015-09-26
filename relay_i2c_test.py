@@ -2,47 +2,55 @@
 
 import smbus
 import time
+import gawRelayHandler
 
-bus = smbus.SMBus(1) # Rev 2 Pi uses 1
+# Device address - defaults to 0x20
+boardAddress = 0x20				# Device address (20-27)
 
-DEVICE = 0x20					# Device address (A0-A2)
-IODIRA = 0x00					# Pin direction register
-OLATA  = 0x14					# Register for outputs
-GPIOA  = 0x12					# Register for inputs
-
-# Set all GPA pins as outputs by setting
-# all bits of IODIRA register to 0
-
-bus.write_byte_data(DEVICE,IODIRA,0x00)
-
-# Set output all 7 output bits to 0
-bus.write_byte_data(DEVICE,OLATA,0)
+relayHandler = gawRelayHandler.gawRelayHandler()
 
 #for MyData in range(0,256):
 while 1:
-  for MyData in [	0b00000000, \
-				0b10000001, \
-				0b11000011, \
-				0b11100111, \
-				0b11111111, \
-				0b01111110, \
-				0b00111100, \
-				0b00011000, \
-				0b00000000, \
-				0b00011000, \
-				0b00111100, \
-				0b01111110, \
-				0b11111111, \
-				0b01111110, \
-				0b00111100, \
-				0b00011000, \
-				0b00000000 \
+	for MyData in [ \
+				"00000000", \
+				"10000001", \
+				"11000011", \
+				"11100111", \
+				"11111111", \
+				"01111110", \
+				"00111100", \
+				"00011000", \
+				"00000000", \
+				"00011000", \
+				"00111100", \
+				"01111110", \
+				"11111111", \
+				"11100111", \
+				"11000011", \
+				"00000000", \
+				"10000000", \
+				"01000000", \
+				"00100000", \
+				"00010000", \
+				"00001000", \
+				"00000100", \
+				"00000010", \
+				"00000001", \
+				"00000001", \
+				"00000010", \
+				"00000100", \
+				"00001000", \
+				"00010000", \
+				"00100000", \
+				"01000000", \
+				"10000000", \
+				"00000000" \
 				]:
 								# Count from 1 to 8 which in binary will count
 								# from 001 to 111
-	bus.write_byte_data(DEVICE,OLATA,MyData)
-#	print MyData
-	time.sleep(0.2) 
+		for pos in range(0,8):
+			EenOfNul = int(MyData[pos])
+			relayHandler.setRelay(boardAddress,pos,EenOfNul)
 
-								# Set all bits to zero
-bus.write_byte_data(DEVICE,OLATA,0)
+		time.sleep(0.08)
+

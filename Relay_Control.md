@@ -26,18 +26,18 @@ We kunnen ook een indicatie-LED toevoegen die ons vertelt dat het relais geactiv
 ### Arduino-info wikispaces
 Dit idee is te vinden in deze tekening uit [dit artikel](https://arduino-info.wikispaces.com/ArduinoPower) van arduino-info.wikispaces. Zoals je kunt zien, wordt hier een transistor genoemd, namelijk de BC847, maar dat is een SMD versie. Niet zo gemakkelijk te solderen voor 'old school' hobbyisten als ik. Voor de basisweerstand wordt hier een waarde van 10K gegeven.
 
-![Figuur 1. - bron: arduino-info.wikispaces](Relay_LED_Indicator.jpg)
+![Figuur 1. - bron: arduino-info.wikispaces](./gfx/Relay_LED_Indicator.jpg)
 
 
 ### Electronics Stack Exchange
 Een andere oplossing, die ik vond op Stack Exchange, maakt ook gebruik van een transistor. De afbeelding hieronder komt uit [dit artikel](http://electronics.stackexchange.com/questions/56093/how-to-use-a-3v-output-to-control-a-5v-relay) van electronics.stackexchange. Dit artikel geeft geen waardes voor de componenten (weerstand en diode).
 
-![Figuur 2. - bron: Electronics Stack Exchange](./ElecStackRelay.gif)
+![Figuur 2. - bron: Electronics Stack Exchange](./gfx/ElecStackRelay.gif)
 
 ### Susa net
 Een andere, soortgelijke oplossing komt van susa.net. Zie de afbeelding hieronder die hoort bij [dit artikel](http://www.susa.net/wordpress/2012/06/raspberry-pi-relay-using-gpio/). Zoals je ziet wordt ook hier een transistor genoemd: een BC337. Ook de weerstand krijgt een waarde: 1 Kilo Ohm; de tekst van het artikel geeft hierbij aan dat, als je strikt wilt zijn en onder 3 mA wilt blijven, je deze waarde moet verhogen naar 1,2K. De stroom wordt dan 2,75 mA.
 
-![Figuur 3. - bron: susa.net](./Relay-Sample.png)
+![Figuur 3. - bron: susa.net](./gfx/Relay-Sample.png)
 
 
 ## Componenten
@@ -45,12 +45,13 @@ Een andere, soortgelijke oplossing komt van susa.net. Zie de afbeelding hieronde
 ### Relais
 Ik vond bij Okaphone [dit relais](http://www.okaphone.com/artikel.asp?id=474062), artikelnummer `V23079-A1001-B301` van €6,95. Deze kan, met een 5 Volt spoel-spanning, 2A schakelen aan 250 Volt AC of 220 Volt DC. Zie ook deze afbeelding:
 
-![Figuur 4. - bron: Okaphone](Relais_Okaphone.gif)
+![Figuur 4. - bron: Okaphone](./gfx/Relais_Okaphone.gif)
 
 [Bij Farnell was ditzelfde relais ook te vinden](http://nl.farnell.com/te-connectivity-axicom/v23079-a1001-b301/relay-dpdt-5vdc-2a-tht/dp/4219960), maar dan voor €2,72.
 
-![Figuur 5. - bron: nl.farnell.com](./Relais_Farnell.jpg)
+![Figuur 5. - bron: nl.farnell.com](./gfx/Relais_Farnell.jpg)
 
+Uiteindelijk bij Okaphone, behalve veel en goed advies, ook de relais voor een goede prijs gekregen.
 
 ### Transistoren
 Genoemde mogelijkheden zijn:
@@ -81,7 +82,7 @@ Verder nodig:
 ## Schema
 Mijn schema wordt dan als volgt:
 
-![Figuur 6. mijn schema](./Rasp_16_Relays_I2C.png)
+![Figuur 6. mijn schema](./gfx/Rasp_16_Relays_I2C.png)
 
 Het gedeelte dat is verbonden met pin 21 (GPA0) van het IC, moet 16 maal worden herhaald.
 
