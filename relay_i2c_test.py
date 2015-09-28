@@ -7,7 +7,7 @@ import gawRelayHandler
 # Device address - defaults to 0x20
 boardAddress = 0x20				# Device address (20-27)
 
-relayHandler = gawRelayHandler.gawRelayHandler()
+relayHandler = gawRelayHandler.relayHandler()
 
 #for MyData in range(0,256):
 while 1:

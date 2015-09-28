@@ -57,7 +57,7 @@ import time
 # --------------------------------------------------------------------------------
 # Class for Handling relay's through the gaw_Rasp_I2C_16_Relays boards
 # --------------------------------------------------------------------------------
-class gawRelayHandler:
+class relayHandler:
 
 	def __init__(self):
 		self.lastAddress = -1
