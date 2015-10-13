@@ -22,8 +22,6 @@
 #
 # Prerequisites	:
 #		smbus
-#		time
-#		logging
 #
 # ------------------------------------------------------------------------
 # 						GNU LICENSE CONDITIONS
@@ -52,7 +50,6 @@
 # ------------------------------------------------------------------------
 
 import smbus
-import time
 
 # --------------------------------------------------------------------------------
 # Class for Handling relay's through the gaw_Rasp_I2C_16_Relays boards
@@ -80,17 +77,18 @@ class relayHandler:
 		
 
 	def initBoard(self, boardAddress):
-										# Force device into default state
-		self.bus.write_byte_data(boardAddress,self.IOCON,0x00)
-										# Set all GPA pins as outputs
-		self.bus.write_byte_data(boardAddress,self.IODIRA,0x00)
-		self.bus.write_byte_data(boardAddress,self.IODIRB,0x00)
+								# Force device into default state
+		if boardAddress != self.lastAddress:
+			self.bus.write_byte_data(boardAddress,self.IOCON,0x00)
+								# Set all GPA pins as outputs
+			self.bus.write_byte_data(boardAddress,self.IODIRA,0x00)
+			self.bus.write_byte_data(boardAddress,self.IODIRB,0x00)
+								# remember board address
+			self.lastAddress = boardAddress	# remember board address
 
 	
 	def setRelay(self, boardAddress, channel, position):
-		if boardAddress != self.lastAddress:
-			self.initBoard(boardAddress)	# Initialize new board
-			self.lastAddress = boardAddress	# remember board address
+		self.initBoard(boardAddress)	# Initialize new board
 		
 		if (channel > -1 and channel < 8):
 			self.register = self.GPIOA
