@@ -84,5 +84,5 @@ while 1:
 			EenOfNul = int(MyData[pos])
 			relayHandler.setRelay(boardAddress,pos,EenOfNul)
 
-		time.sleep(0.08)
+		time.sleep(0.05)
 
