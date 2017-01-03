@@ -84,14 +84,17 @@ Furthermore I need:
 * `MCP23017-E/SO` I2C 16 bit I/O expander (€2,45)
 
 
-## Update
-In a later stage I discovered a far more elegant solution. There is a chip, the `ULN2803A`, that can drive eight relays using an internal `darlington` circuit and also contains an internal TVS diode. I upgraded my schematic accordingly.
-
-
 ## Schematic
-My schematic now will be:
+My schematic now would be (but also see update at bottom!):
 
 ![Figure 6. my schematic](./gfx/Rasp_16_Relays_I2C.png)
 
+
+## Update
+In a later stage I discovered a far more elegant solution. There is a chip, the `ULN2803A`, that can drive eight relays using an internal `darlington` circuit and also contains an internal TVS diode. See the [ULN2803A datasheet](./doc/Datasheet_ULN2803a.pdf).
+
+I upgraded my schematic accordingly:
+
+![Figure 7. my latest, updated schematic](./gfx/ULN2803_version.png)
 
 
