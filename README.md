@@ -85,16 +85,16 @@ Furthermore I need:
 
 
 ## Schematic
-My schematic now would be (but also see update at bottom!):
-
-![Figure 6. my schematic](./gfx/Rasp_16_Relays_I2C.png)
+The [schematic based on the information so far](./gfx/Rasp_16_Relays_I2C.png).
 
 
 ## Update
-In a later stage I discovered a far more elegant solution. There is a chip, the `ULN2803A`, that can drive eight relays using an internal `darlington` circuit and also contains an internal TVS diode. See the [ULN2803A datasheet](./doc/Datasheet_ULN2803a.pdf).
+In a later stage I discovered a far more elegant solution. There is a chip, the `ULN2803A`, that can drive eight relays using an internal `darlington` circuit and also contains an internal TVS diode. See the [ULN2803A datasheet](./doc/Datasheet_ULN2803a.pdf). 
+
+A [PCB layout](./doc/gaw_I2C_MCP_Power_Out.pdf) is available (untested), I made it using [Eagle](https://cadsoft.io).
 
 I upgraded my schematic accordingly:
 
-![Figure 7. my latest, updated schematic](./gfx/ULN2803_version.png)
+![Figure 6. my latest, updated schematic](./gfx/ULN2803_version.png)
 
 
