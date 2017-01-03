@@ -1,89 +1,93 @@
-# Gebruik van de Raspberry Pi bij modelspoor
+# Using the Raspberry Pi in model railroading
 
-## Het probleem
-Op een modelbaan heb je al snel veel te schakelen. In een DCC modelbaan omgeving moeten we in staat zijn om DCC (15 tot 25 Volt blokspanning) te schakelen. De Raspberry Pi kan niet zomaar dit soort spanningen schakelen. 
+## The problem
+There's a lot of switching to do on a model railroad (pun intended). In a DCC environment we must be able to switch DCC block waves of 15 to 25 Volts / 1 to 2, sometimes even 3 Amps. The Raspberry Pi can not switch this kind of power by itself.
 
 ### I/O expander
-Het doel van dit project is om een 'add-on board' te maken waarmee met behulp van één board 16 maal zo'n (DCC) spanning te schakelen is. Die schakelingen wil ik aansturen met een `MCP23017`, een I2C 16 channel I/O expander chip. Deze chip heeft als eigenschap dat je hem op acht verschillende adressen op de I2C bus kunt laten werken. Dat betekent dan dat je, als je inderdaad acht van deze 'add-on boards' gebruikt, 128 relais mee kunt aansturen via de twee draden van de I2C bus.
+Purpose of my project is to create an add-on board with which we can switch DCC power (an other stuff) with 16 relays. These circuits will be controlled using a `MCP23017`, an I2C 16 channel I/O expander chip. This chip can be made to work at one of eight possible adresses on the I2C bus. This means that, when we indeed would use aight of these boards, we could control a maximum of 128 ralays via only the two wires od the I2C bus!
 
-### Relais
-Een oplossing voor het onvoldoende vermogen van de Raspberry Pi is om direct, of indirect via andere chips die 3,3 Volt leveren, een relais aan te sturen. Ook daarbij is er nog een uitdaging, want ook relais-spoelen onttrekken (veel) meer stroom dan een logische 3,3 Volt uitgangspin kan leveren. Ook andere chips van dit (logic) niveau leveren niet het benodigde vermogen. 
+### Relays
+A solution to solve the insufficient power of the Raspberry Pi is to control relays. This presents us with a challenge, because most relay coils take (much) more power than the Raspberry Pi can muster up from its 3,3 Volt outputs.
 
-Ik kies hierbij voor relais die werken op 5 Volt. Deze keuze maak ik omdat ook andere 'add-on boards' met 5 Volt worden gevoed. De uitgangsspanning van de logic chips (3,3 Volt) moet dan worden omgezet naar de 5 Volt die het relais nodig heeft. Hieronder vind je een aantal schakelingen als resultaat van wat Googlen. Er wordt gebruik gemaakt van een transistor als schakelaar, die onder besturing van de uitvoer-pin van de Raspberry Pi of van een aangesloten chip de stroom schakelt die het relais nodig heeft.
+I will choose relays that will work on 5 Volts DC because the other availbale add-on boards also work on 5 Volts. The voltage of the logic chips (3,3 Volts) must be converted to the appropriate leven of 5 Volts. Below you will find a number of solutions I found on the internet. Mostly they use transistors as switches to do the conversion, controlled by a Raspberry Pi output pin.
 
-#### Bescherming
-Maar ook met die transistor erbij, moet de uitgang van de gevoelige logic chip worden beschermd tegen te hoge stroomafname. Dat doen we met een zogeheten basis-weerstand, een weerstand die tussen de uitgang van de chip en de basis van de transistor wordt geplaatst. Een waarde van een paar K tot 10K wordt aangeraden. Zou die er niet zijn dan zou er, via de transistor, kortsluiting ontstaan tussen de 3,3V van de uitgang en de GND (0 Volt).
+#### Protection
+Even with the transistor, the output of the logic chips has to be protected against to high of an output current. This is done by using a base-resistor that will be placed between the output of the logic chip and the base of the transistor. A value of a couple of K to 10K is recommended. Should this resistor not be present, there would be a short between de 3,3V output of the logic chip and GND (0V) through the transistor. This would end in the untimely demise of (the output of) the logic chip and most likely the transistor as well.
 
-#### Spanningspiek 'blussen'
-Bij het uitschakelen geeft een relais een relatief hoge spanningspiek. De rest van de schakeling wil je hiertegen beschermen, dat doe je met een zogeheten blusdiode. Deze blusdiode wordt antiparallel aan de relais-spoel geschakeld, om die uitschakel-stroom terug te voeren aan de spoel, zodat deze niet in de rest van de schakeling terecht komt.
+#### Transient Voltage Suppressor Diode
+Another thing the circuit needs is a protection against the hysteresis effect. This is the effect that happend when you switch off power going through a coil. When you switch off the relay, its coil will produce a short spike in voltage. To protect the circuit against this, we use an anti-parallel diode that shorts this voltage spike over the coil so that it does not reach the rest of the circuit.
 
 #### LED indicator
-We kunnen ook een indicatie-LED toevoegen die ons vertelt dat het relais geactiveerd is. Die plaatsen we, in serie met een weerstand, nu niet anti- maar gewoon parallel aan de relais-spoel. Zie figuur 1, bij Arduino-info.
+A nice little extra would be to have an indicator LED to tell us when a relay is activated or not. We can place this LED, in series with a resistor, parallel over the relay coil. See also figure 1, the Arduino-info.
 
 
-## Oplossingen
+## Solutions
 
 ### Arduino-info wikispaces
-Dit idee is te vinden in deze tekening uit [dit artikel](https://arduino-info.wikispaces.com/ArduinoPower) van arduino-info.wikispaces. Zoals je kunt zien, wordt hier een transistor genoemd, namelijk de BC847, maar dat is een SMD versie. Niet zo gemakkelijk te solderen voor 'old school' hobbyisten als ik. Voor de basisweerstand wordt hier een waarde van 10K gegeven.
+The idea you can see in this drawing could be found in [this article](https://arduino-info.wikispaces.com/ArduinoPower) of arduino-info.wikispaces. As you can see, a transistor is mentioned here,the BC847, but that's an SMD version. That's not so easy to solder in for 'old school' hobbyists like me. For the base resistor we see a value of 10K.
 
-![Figuur 1. - bron: arduino-info.wikispaces](./gfx/Relay_LED_Indicator.jpg)
+![Figure 1. - source: arduino-info.wikispaces](./gfx/Relay_LED_Indicator.jpg)
 
 
 ### Electronics Stack Exchange
-Een andere oplossing, die ik vond op Stack Exchange, maakt ook gebruik van een transistor. De afbeelding hieronder komt uit [dit artikel](http://electronics.stackexchange.com/questions/56093/how-to-use-a-3v-output-to-control-a-5v-relay) van electronics.stackexchange. Dit artikel geeft geen waardes voor de componenten (weerstand en diode).
+Another solution is the one I found at Stack Exchange, also uses a transistor. The picture velow comes from [this article](http://electronics.stackexchange.com/questions/56093/how-to-use-a-3v-output-to-control-a-5v-relay) at electronics.stackexchange. This one does not specify values for the components (resistor and diode).
 
-![Figuur 2. - bron: Electronics Stack Exchange](./gfx/ElecStackRelay.gif)
+![Figure 2. - source: Electronics Stack Exchange](./gfx/ElecStackRelay.gif)
 
 ### Susa net
-Een andere, soortgelijke oplossing komt van susa.net. Zie de afbeelding hieronder die hoort bij [dit artikel](http://www.susa.net/wordpress/2012/06/raspberry-pi-relay-using-gpio/). Zoals je ziet wordt ook hier een transistor genoemd: een BC337. Ook de weerstand krijgt een waarde: 1 Kilo Ohm; de tekst van het artikel geeft hierbij aan dat, als je strikt wilt zijn en onder 3 mA wilt blijven, je deze waarde moet verhogen naar 1,2K. De stroom wordt dan 2,75 mA.
+Yet another, similar solution comes from susa.net. See the picture below, belonging to [this article](http://www.susa.net/wordpress/2012/06/raspberry-pi-relay-using-gpio/). Again, a transistor is used: a BC337. The resistor gets a value of 1 Kilo Ohm; the article text says to be strict and wanted to stay below 3mA, this value should actually be 1,2K. The current then will be 2,75 mA.
 
-![Figuur 3. - bron: susa.net](./gfx/Relay-Sample.png)
+![Figure 3. - source: susa.net](./gfx/Relay-Sample.png)
 
 
-## Componenten
+## Components
 
-### Relais
-Ik vond bij Okaphone [dit relais](http://www.okaphone.com/artikel.asp?id=474062), artikelnummer `V23079-A1001-B301` van €6,95. Deze kan, met een 5 Volt spoel-spanning, 2A schakelen aan 250 Volt AC of 220 Volt DC. Zie ook deze afbeelding:
+### Relay
+At our local electronics shop, Okaphone, I found [this relay](http://www.okaphone.com/artikel.asp?id=474062), article number `V23079-A1001-B301` (€6,95). With its 5 Volt coil-voltage, it can switch 2 Amps with 250 Volts AC or 220 Volt DC. See picture below:
 
-![Figuur 4. - bron: Okaphone](./gfx/Relais_Okaphone.gif)
+![Figure 4. - source: Okaphone](./gfx/Relais_Okaphone.gif)
 
-[Bij Farnell was ditzelfde relais ook te vinden](http://nl.farnell.com/te-connectivity-axicom/v23079-a1001-b301/relay-dpdt-5vdc-2a-tht/dp/4219960), maar dan voor €2,72.
+[At another shop (Farnell) the same relay could also be found](http://nl.farnell.com/te-connectivity-axicom/v23079-a1001-b301/relay-dpdt-5vdc-2a-tht/dp/4219960), only there it would set us back only €2,72.
 
-![Figuur 5. - bron: nl.farnell.com](./gfx/Relais_Farnell.jpg)
+![Figure 5. - source: nl.farnell.com](./gfx/Relais_Farnell.jpg)
 
-Uiteindelijk bij Okaphone, behalve veel en goed advies, ook de relais voor een goede prijs gekregen.
+In the end I got - apart from the usual good advice - my relays for a good (lower) price.
 
-### Transistoren
-Genoemde mogelijkheden zijn:
+### Transistors
+Possibilities that were mentioned are:
 
-* 'BC337', traditionele behuizing
-* 'BC547', idem, maar levert max. 100mA, dus net te laag
-* 'BC847', SMD, valt af.
+* 'BC337', traditional
+* 'BC547', same, but can only work max. 100mA
+* 'BC847', SMD, no good.
 
 
 ### Diode
-Maakt eigenlijk niet zoveel uit, de standaard diode `1N4007` volstaat.
+Which diode we use actually does not matter that much, the standard diode `1N4007` will suffice.
 
 
-## Conclusie
-Ik ga na advies van Okaphone kiezen voor:
+## Summary
+I will choose for:
 
-* het `V23079-A1001-B301` relais, 5V spoelspanning (€3,30)
-* de `BC337-16` (Old school, €0,20) 
-* de `1N4007` als 'blus-diode' (€0,10)
-* een 10K basisweerstand (€0,01)
-* een 1K weerstand voor stroombegrenzing voor de indicatie LED (0,01)
-* een groene indicatie LED `L934LGD` - stroom tot 5mA (€0,20)
+* `V23079-A1001-B301` relay
+* `BC337-16` (Old school, €0,20) 
+* `1N4007` as TVS diode (€0,10)
+* 10K base resistor (€0,01)
+* 1K resistor protecting the current for the indicator LED (0,01)
+* green indicator LEDs `L934LGD` - current up to max 5mA (€0,20)
 
-Verder nodig:
+Furthermore I need:
 
 * `MCP23017-E/SO` I2C 16 bit I/O expander (€2,45)
 
-## Schema
-Mijn schema wordt dan als volgt:
 
-![Figuur 6. mijn schema](./gfx/Rasp_16_Relays_I2C.png)
+## Update
+In a later stage I discovered a far more elegant solution. There is a chip, the `ULN2803A`, that can drive eight relays using an internal `darlington` circuit and also contains an internal TVS diode. I upgraded my schematic accordingly.
 
-Het gedeelte dat is verbonden met pin 21 (GPA0) van het IC, moet 16 maal worden herhaald.
+
+## Schematic
+My schematic now will be:
+
+![Figure 6. my schematic](./gfx/Rasp_16_Relays_I2C.png)
+
 
 
