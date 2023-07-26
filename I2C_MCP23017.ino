@@ -27,11 +27,11 @@
  * ------------------------------------------------------------------------- */
 
 #include <Wire.h>
-#include "Adafruit_MCP23017.h"
+#include <Adafruit_MCP23X17.h>
 
 int boardAddress = 0x00;
 
-Adafruit_MCP23017 mcp;
+Adafruit_MCP23X17 mcp;
 
 unsigned int myVals[] = \
 { \
@@ -104,7 +104,7 @@ unsigned int myVals[] = \
 
 void setup() 
 {
-  mcp.begin(boardAddress);              // join i2c bus
+  mcp.begin_I2C(boardAddress);              // join i2c bus
                                         // set all as output
   for (int i=0; i<=15; i++) mcp.pinMode(i, OUTPUT);
 }
