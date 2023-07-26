@@ -35,6 +35,7 @@ Adafruit_MCP23X17 mcp;
 
 unsigned int myVals[] = \
 { \
+
   0B0000000000000000, \
   0B1000000000000001, \
   0B1100000000000011, \
@@ -68,6 +69,7 @@ unsigned int myVals[] = \
   0B0000001111000000, \
   0B0000000110000000, \
   0B0000000000000000, \
+ 
   0B1000000000000000, \
   0B0100000000000000, \
   0B0010000000000000, \
@@ -104,18 +106,25 @@ unsigned int myVals[] = \
 
 void setup() 
 {
-  mcp.begin_I2C(boardAddress);              // join i2c bus
+  Serial.begin(9600);
+  Serial.println("Start test");
+
+  if (!mcp.begin_I2C()) {              // join i2c bus
+    Serial.println("ERROR mcp.begin");
+    while(1);
+  }
                                         // set all as output
   for (int i=0; i<=15; i++) mcp.pinMode(i, OUTPUT);
 }
 
 void loop() 
 {
-
+  Serial.println("Start test");
+  
   for (int i = 0; i < sizeof(myVals)/sizeof(int); i++) 
   {
     mcp.writeGPIOAB(myVals[i]);
-    delay(50);
+    delay(100);
   }
   
   exit(0);
