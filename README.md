@@ -3,10 +3,10 @@
 ***I2C 16 relay board for use with RPi***
 
 
-# Using the Raspberry Pi in model railroading
+# Using the Raspberry Pi in switching power
 
 ## The problem
-There's a lot of switching to be done on a model railroad (pun intended). In a DCC environment we must be able to switch DCC block waves of 15 to 25 Volts / 1-2 Amps. The Raspberry Pi can not switch that kind of power by itself.
+There's a lot of switching to be done, for example on a model railroad (pun intended). In that environment we must be able to switch DCC block waves of 15 to 25 Volts / 1-2 Amps. The Raspberry Pi can not switch that kind of power by itself.
 
 ### I/O expander
 Purpose of this project is to create an add-on board with which we can switch DCC power (an other stuff) with 16 relays. These circuits will be controlled using a `MCP23017`, an I2C 16 channel I/O expander chip. This chip can be made to work at one of eight possible adresses on the I2C bus. This means that, when we indeed would use eight of these boards, we could control a maximum of 128 (!) relays via only the two wires on the I2C bus!
