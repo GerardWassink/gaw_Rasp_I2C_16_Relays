@@ -55,8 +55,8 @@ Adafruit_MCP23X17 mcp;                          // Multiplexer object
 /* ------------------------------------------------------------------------- *
  *       Create objects with addres(ses) for the LCD screen
  * ------------------------------------------------------------------------- */
-uint8_t displayAddress = 0x25;                  // Display address
-LiquidCrystal_I2C display(0x25,20,4);           // Initialize display
+uint8_t displayAddress = 0x26;                  // Display address
+LiquidCrystal_I2C display(displayAddress,20,4);           // Initialize display
 
 char scrLines[4][21];                           // Scroll Array
 
@@ -173,7 +173,7 @@ void setup()
   display.backlight();                          // Backlights on by default
   arrayInit();                                  // Initialize scrollArray
 
-  debugln("Initializing Multiplexer MCP23017");
+  LCD_scroll(display, F("Init MCP23017"));
   if (!mcp.begin_I2C(mcpAddress))               // join i2c bus
   {
     LCD_scroll(display, F("MCP init failed     "));
